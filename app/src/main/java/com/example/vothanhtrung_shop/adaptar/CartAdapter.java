@@ -7,18 +7,21 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.vothanhtrung_shop.ApiCaller;
+import com.example.vothanhtrung_shop.R;
 import com.example.vothanhtrung_shop.databinding.CartItemBinding;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
     private final List<String> cartItems;       // Danh sách các mặt hàng trong giỏ hàng
     private final List<String> cartItemPrice;    // Danh sách giá của các mặt hàng
-    private final List<Integer> cartImage;       // Danh sách ảnh đại diện cho mỗi mặt hàng
+    private final List<String> cartImage;       // Danh sách ảnh đại diện cho mỗi mặt hàng
     private final int[] itemQuantities;          // Mảng lưu số lượng của mỗi mặt hàng trong giỏ hàng
 
     // Constructor để khởi tạo Adapter với dữ liệu
-    public CartAdapter(List<String> cartItems, List<String> cartItemPrice, List<Integer> cartImage) {
+    public CartAdapter(List<String> cartItems, List<String> cartItemPrice, List<String> cartImage) {
         this.cartItems = cartItems;
         this.cartItemPrice = cartItemPrice;
         this.cartImage = cartImage;
@@ -105,7 +108,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             // Gán thông tin mặt hàng vào các TextView tương ứng
             binding.cartFoodName.setText(cartItems.get(position));
             binding.cartiItemPrice.setText(cartItemPrice.get(position));
-            binding.cartImage.setImageResource(cartImage.get(position));
+
+            Picasso.get()
+                    .load(ApiCaller.url+"/image/products/"+cartImage.get(position)
+                    )
+//                    .placeholder(R.drawable.load)
+//                    .error(R.drawable.error_200)
+                    .into(binding.cartImage);
+
             binding.quantity.setText(String.valueOf(quantity)); // Hiển thị số lượng
         }
     }

@@ -16,6 +16,8 @@ import com.example.vothanhtrung_shop.Cart;
 import com.example.vothanhtrung_shop.R;
 import com.example.vothanhtrung_shop.adaptar.CartAdapter;
 import com.example.vothanhtrung_shop.databinding.FragmentCartBinding;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,7 +30,7 @@ public class CartFragment extends Fragment {
     private FragmentCartBinding binding;
     List<String> cartFoodName = new ArrayList<>();
     List<String> cartItemPrice = new ArrayList<>();
-    List<Integer> cartImage = new ArrayList<>();
+    List<String> cartImage = new ArrayList<>();
     public CartFragment() {
         // Required empty public constructor
     }
@@ -57,8 +59,9 @@ public class CartFragment extends Fragment {
                         JSONObject jsonObjectProduct = new JSONObject(jsonArray.getJSONObject(i).getString("product"));
                         Log.d("aaaaa", jsonObjectProduct.getString("title"));
                         cartFoodName.add(jsonObjectProduct.getString("title"));
-                        cartItemPrice.add("$5");
-                        cartImage.add(R.drawable.menu1);
+                        int price = jsonObjectProduct.getInt("price");
+                        cartItemPrice.add(String.valueOf(price));
+                        cartImage.add(jsonObjectProduct.getString("photo"));
                         CartAdapter adapter = new CartAdapter(cartFoodName, cartItemPrice, cartImage);
                         binding.cartRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
                         binding.cartRecyclerView.setAdapter(adapter);
@@ -76,7 +79,6 @@ public class CartFragment extends Fragment {
 
         Log.d("aaaaavvvv", cartFoodName.toString());
 
-//
 //        cartFoodName.add("Burger");
 //        cartFoodName.add("Sandwich");
 //        cartFoodName.add("Momo");
