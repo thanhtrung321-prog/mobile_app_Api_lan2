@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/BuyAgainFoodImage"
+                android:layout_width="62dp"
+                android:layout_height="62dp"
+                android:src="@drawable/menu2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:id="@+id/BuyAgainFoodName"
+                android:layout_width="122dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/yeonsungregular"
+                android:text="Spacy fresh crab"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@id/BuyAgainFoodImage"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView27"
+                android:layout_width="123dp"
+                android:layout_height="21dp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/lato_regular"
+                android:text="Waroenk kita"
+                android:textColor="@color/grey_color"
+                app:layout_constraintEnd_toEndOf="@id/BuyAgainFoodName"
+                app:layout_constraintStart_toStartOf="@id/BuyAgainFoodName"
+                app:layout_constraintTop_toBottomOf="@id/BuyAgainFoodName" />
+
+            <TextView
+                android:id="@+id/BuyAgainFoodPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="$35"
+                android:textColor="@color/text_color"
+                android:textSize="19sp"
+                app:layout_constraintEnd_toEndOf="@id/textView27"
+                app:layout_constraintStart_toStartOf="@id/textView27"
+                app:layout_constraintTop_toBottomOf="@id/textView27" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/BuyAgainFoodButton"
+                android:layout_width="126dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="36dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/background_radient_button"
+                android:text="Mua Lại"
+                android:textColor="@color/white"
+                app:cardBackgroundColor="@color/green_color"
+                app:cardCornerRadius="20dp"
+                app:layout_constraintBottom_toBottomOf="@id/BuyAgainFoodName"
+                app:layout_constraintStart_toEndOf="@id/BuyAgainFoodName"
+                app:layout_constraintTop_toTopOf="@id/BuyAgainFoodName"
+                app:layout_constraintVertical_bias="0.0" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
