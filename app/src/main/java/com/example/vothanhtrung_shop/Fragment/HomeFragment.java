@@ -17,9 +17,11 @@ import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.interfaces.ItemClickListener;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.vothanhtrung_shop.ApiCaller;
+import com.example.vothanhtrung_shop.Cart;
 import com.example.vothanhtrung_shop.Product;
 import com.example.vothanhtrung_shop.R;
 
+import com.example.vothanhtrung_shop.User;
 import com.example.vothanhtrung_shop.adaptar.PopularAddaptar;
 import com.example.vothanhtrung_shop.databinding.FragmentHomeBinding;
 import com.squareup.picasso.Picasso;
@@ -171,6 +173,23 @@ public class HomeFragment extends Fragment {
             public void onError(String errorMessage) {
                 Log.e("Error", errorMessage);
                 // Handle error
+            }
+        });
+
+        apiCaller.makeStringRequest(ApiCaller.url + "/carts/user/" + User.getId(), new ApiCaller.ApiResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    JSONObject jsonObjectCart = new JSONObject(response);
+                    Cart.setId(jsonObjectCart.getInt("id"));
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+
             }
         });
 

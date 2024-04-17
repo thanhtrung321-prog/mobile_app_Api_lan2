@@ -56,7 +56,7 @@ public class SignActivity extends AppCompatActivity {
                     return;
                 }
 
-                User newUser = new User(email, password, "null", userName, "null");
+                User newUser = new User(userName, password, email, "null", "null");
 
                 apiCaller.addUser(newUser, new ApiCaller.ApiResponseListener<User>() {
                     @Override
