@@ -99,11 +99,12 @@ public class LoginActivity extends AppCompatActivity {
     private void setUser(LoginActivity loginActivity, String s, String s1, boolean checked) {
         SharedPreferences sharedPreferences = loginActivity.getSharedPreferences("my_shared_pref", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("email", s);
-        editor.putString("password", s1);
+        editor.putString("username", s); // Sửa key thành "username"
+        editor.putString("password", s1); // Giữ nguyên key là "password"
         editor.putBoolean("remember_me", checked);
         editor.apply();
     }
+
 
     private boolean getRememberMe(LoginActivity loginActivity) {
         SharedPreferences sharedPreferences = loginActivity.getSharedPreferences("my_shared_pref", Context.MODE_PRIVATE);
@@ -112,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private String getPassword(LoginActivity loginActivity) {
         SharedPreferences sharedPreferences = loginActivity.getSharedPreferences("my_shared_pref", Context.MODE_PRIVATE);
-        return sharedPreferences.getString("password", "");
+        return sharedPreferences.getString("password", ""); // Giữ nguyên key là "password"
     }
 
     private String getUsername(LoginActivity loginActivity) {

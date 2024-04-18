@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.vothanhtrung_shop.ApiCaller;
 import com.example.vothanhtrung_shop.Cart;
 import com.example.vothanhtrung_shop.R;
+import com.example.vothanhtrung_shop.User;
 import com.example.vothanhtrung_shop.adaptar.CartAdapter;
 import com.example.vothanhtrung_shop.databinding.FragmentCartBinding;
 import com.squareup.picasso.Picasso;
@@ -57,6 +58,7 @@ public class CartFragment extends Fragment {
                     for(int i = 0; i< jsonArray.length();i++){
 
                         JSONObject jsonObjectProduct = new JSONObject(jsonArray.getJSONObject(i).getString("product"));
+
                         Log.d("aaaaa", jsonObjectProduct.getString("title"));
                         cartFoodName.add(jsonObjectProduct.getString("title"));
                         int price = jsonObjectProduct.getInt("price");
