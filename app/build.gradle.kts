@@ -33,6 +33,7 @@ android {
 }
 
 dependencies {
+    implementation ("com.airbnb.android:lottie:4.1.0")
     implementation ("org.mindrot:jbcrypt:0.4")
     implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
     implementation("com.google.firebase:firebase-analytics")

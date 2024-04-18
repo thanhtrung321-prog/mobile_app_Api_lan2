@@ -230,7 +230,7 @@ public class ApiCaller {
                     @Override
                     public void onResponse(String response) {
                         // Assuming successful deletion returns a message
-                        listener.onSuccess("Cart successfully deleted!");
+                        listener.onSuccess("Xóa thành công sản phẩm!");
                     }
                 }, new Response.ErrorListener() {
             @Override
