@@ -17,14 +17,15 @@
         app:layout_constraintVertical_bias="0.449"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/load" />
+        app:lottie_rawRes="@raw/success" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Thanh toán thành công!"
         android:textColor="#4D5A60"
-        android:textSize="20sp"
+        android:textSize="25sp"
+        android:fontFamily="@font/yeonsungregular"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,9 +36,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cảm ơn bạn! Chúc bạn ngon miệng!"
-        android:textColor="#4D5A60"
+        android:text="Cảm ơn cậu! Chúc cậu ăn ngon miệng!"
+        android:textColor="@color/text_color"
         android:textSize="18sp"
+        android:fontFamily="@font/yeonsungregular"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -45,13 +47,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.229" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnGoHome"
         android:layout_width="210dp"
         android:layout_height="64dp"
-        android:background="@drawable/background_radient_button"
+        android:background="@drawable/button_profile"
         android:text="Tiếp tục mua hàng!"
         android:textColor="@color/white"
+        android:fontFamily="@font/lato_bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.512"
