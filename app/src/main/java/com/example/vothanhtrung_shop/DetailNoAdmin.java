@@ -88,83 +88,24 @@ public class DetailNoAdmin extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        // Nếu đã có giỏ hàng
+                        // Kiểm tra xem đã có giỏ hàng hay chưa
                         if (Cart.getId() != 0) {
+                            // Nếu đã có giỏ hàng, kiểm tra sản phẩm có trong giỏ hàng hay không
                             try {
-                                // Thêm sản phẩm vào giỏ hàng
-                                apiCaller.addCartDetail(Cart.getId(),
-                                        itemProductData.getInt("id"), itemProductData.getInt("quantity"), new
-                                                ApiCaller.ApiResponseListener<JSONObject>() {
-                                                    @Override
-                                                    public void onSuccess(JSONObject response) {
-                                                        // Kiểm tra phản hồi từ máy chủ và xử lý
-                                                        try {
-                                                            // Phản hồi thành công từ máy chủ
-                                                            if (response.has("id")) {
-                                                                // Lấy id của cart item đã được thêm vào
-                                                                int cartItemId = response.getInt("id");
-                                                                // Thông báo thành công
-                                                                Toast.makeText(getApplicationContext(), "Sản phẩm đã được thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
-                                                            } else {
-                                                                // Phản hồi không thành công từ máy chủ
-                                                                Toast.makeText(getApplicationContext(), "Có lỗi xảy ra khi thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
-                                                            }
-                                                        } catch (JSONException e) {
-                                                            e.printStackTrace();
-                                                        }
-                                                    }
-
-                                                    @Override
-                                                    public void onError(String errorMessage) {
-                                                        // Xử lý lỗi nếu có
-                                                        Log.e("AddToCartError", errorMessage);
-                                                        Toast.makeText(getApplicationContext(), "Có lỗi xảy ra khi thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
-                                                    }
-                                                });
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                throw new RuntimeException(e);
-                            }
-                        } else {
-                            // Nếu chưa có giỏ hàng, tạo mới và thêm sản phẩm vào
-                            apiCaller.addCart(User.getId(), new
-                                    ApiCaller.ApiResponseListener<JSONObject>() {
+                                boolean isProductInCart = Cart.getInstance(User.getId()).getProductQuantities().containsKey(itemProductData.getInt("id"));
+                                if (isProductInCart) {
+                                    // Nếu sản phẩm đã tồn tại trong giỏ hàng, chỉ tăng số lượng
+                                    int currentQuantity = Cart.getInstance(User.getId()).getProductQuantities().get(itemProductData.getInt("id"));
+                                    Cart.getInstance(User.getId()).updateItemQuantity(itemProductData.getInt("id"), currentQuantity + 1);
+                                } else {
+                                    // Nếu sản phẩm chưa tồn tại trong giỏ hàng, thêm mới vào giỏ hàng
+                                    apiCaller.addCartDetail(Cart.getId(), itemProductData.getInt("id"), 1, new ApiCaller.ApiResponseListener<JSONObject>() {
                                         @Override
                                         public void onSuccess(JSONObject response) {
                                             try {
-                                                // Lưu id của giỏ hàng mới được tạo
-                                                Cart.setId(response.getInt("id"));
-                                                // Thêm sản phẩm vào giỏ hàng
-                                                apiCaller.addCartDetail(Cart.getId(), itemProductData.getInt("id"),
-                                                        itemProductData.getInt("quantity"), new
-                                                                ApiCaller.ApiResponseListener<JSONObject>() {
-                                                                    @Override
-                                                                    public void onSuccess(JSONObject response) {
-                                                                        // Kiểm tra phản hồi từ máy chủ và xử lý
-                                                                        try {
-                                                                            // Phản hồi thành công từ máy chủ
-                                                                            if (response.has("id")) {
-                                                                                // Lấy id của cart item đã được thêm vào
-                                                                                int cartItemId = response.getInt("id");
-                                                                                // Thông báo thành công
-                                                                                Toast.makeText(getApplicationContext(), "Sản phẩm đã được thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
-                                                                            } else {
-                                                                                // Phản hồi không thành công từ máy chủ
-                                                                                Toast.makeText(getApplicationContext(), "Có lỗi xảy ra khi thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
-                                                                            }
-                                                                        } catch (JSONException e) {
-                                                                            e.printStackTrace();
-                                                                        }
-                                                                    }
-
-                                                                    @Override
-                                                                    public void onError(String errorMessage) {
-                                                                        // Xử lý lỗi nếu có
-                                                                        Log.e("AddToCartError", errorMessage);
-                                                                        Toast.makeText(getApplicationContext(), "Có lỗi xảy ra khi thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
-                                                                    }
-                                                                });
-                                            } catch (JSONException e) {
+                                                // Hiển thị thông báo
+                                                Toast.makeText(getApplicationContext(), "Sản phẩm đã được thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
+                                            } catch (Exception e) {
                                                 e.printStackTrace();
                                                 throw new RuntimeException(e);
                                             }
@@ -177,6 +118,49 @@ public class DetailNoAdmin extends AppCompatActivity {
                                             Toast.makeText(getApplicationContext(), "Có lỗi xảy ra khi thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
                                         }
                                     });
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                throw new RuntimeException(e);
+                            }
+                        } else {
+                            // Nếu chưa có giỏ hàng, tạo mới giỏ hàng và thêm sản phẩm đầu tiên vào
+                            apiCaller.addCart(User.getId(), new ApiCaller.ApiResponseListener<JSONObject>() {
+                                @Override
+                                public void onSuccess(JSONObject response) {
+                                    try {
+                                        // Lưu id của giỏ hàng mới được tạo
+                                        int newCartId = response.getInt("id");
+                                        // Thiết lập id của giỏ hàng mới
+                                        Cart.setId(newCartId);
+                                        // Thêm sản phẩm vào giỏ hàng
+                                        apiCaller.addCartDetail(newCartId, itemProductData.getInt("id"), 1, new ApiCaller.ApiResponseListener<JSONObject>() {
+                                            @Override
+                                            public void onSuccess(JSONObject response) {
+                                                // Hiển thị thông báo
+                                                Toast.makeText(getApplicationContext(), "Sản phẩm đã được thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
+                                            }
+
+                                            @Override
+                                            public void onError(String errorMessage) {
+                                                // Xử lý lỗi nếu có
+                                                Log.e("AddToCartError", errorMessage);
+                                                Toast.makeText(getApplicationContext(), "Có lỗi xảy ra khi thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                        throw new RuntimeException(e);
+                                    }
+                                }
+
+                                @Override
+                                public void onError(String errorMessage) {
+                                    // Xử lý lỗi nếu có
+                                    Log.e("AddCartError", errorMessage);
+                                    Toast.makeText(getApplicationContext(), "Có lỗi xảy ra khi tạo giỏ hàng!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
                         finish();
                     }

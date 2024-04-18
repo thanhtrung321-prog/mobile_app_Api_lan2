@@ -39,7 +39,7 @@
         android:background="@drawable/proceedbutonshape"
         android:elevation="2dp"
         android:gravity="center"
-        android:text="Tiếp Tục"
+        android:text="Thanh toán"
         android:textColor="@color/text_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

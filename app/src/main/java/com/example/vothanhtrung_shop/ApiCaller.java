@@ -24,7 +24,7 @@ public class ApiCaller {
     private RequestQueue requestQueue;
     private static ApiCaller instance;
     private static Context ctx;
-    public static String url = "http://192.168.145.130:8080/api";
+    public static String url = "http://192.168.1.10:8080/api";
 
     private ApiCaller(Context context) {
         ctx = context.getApplicationContext();
@@ -274,6 +274,37 @@ public class ApiCaller {
         });
         addToRequestQueue(jsonObjectRequest);
     }
+    public void updateCartDetail(final int cartId, final int productId, final int quantity, final ApiResponseListener<JSONObject> listener) {
+        String cartDetailUrl = url + "/cartDetails";
+        JSONObject cartDetailJson = new JSONObject();
+        try {
+            JSONObject productJson = new JSONObject();
+            productJson.put("id", productId);
+            JSONObject cartJson = new JSONObject();
+            cartJson.put("id", cartId);
+            cartDetailJson.put("quantity", quantity);
+            cartDetailJson.put("product", productJson);
+            cartDetailJson.put("cart", cartJson);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            listener.onError(e.getMessage());
+            return;
+        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, cartDetailUrl, cartDetailJson,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        listener.onSuccess(response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                listener.onError(error.getMessage());
+            }
+        });
+        addToRequestQueue(jsonObjectRequest);
+    }
+
 
     public void deleteItemCart(int cartItemId, final
     ApiResponseListener<String> listener) {
