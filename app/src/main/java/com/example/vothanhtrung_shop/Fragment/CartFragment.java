@@ -37,6 +37,7 @@ public class CartFragment extends Fragment {
     List<String> cartFoodName = new ArrayList<>();
     List<String> cartItemPrice = new ArrayList<>();
     List<String> cartImage = new ArrayList<>();
+    double totalPrice = 0.0;
     public CartFragment() {
         // Required empty public constructor
     }
@@ -76,9 +77,11 @@ public class CartFragment extends Fragment {
                         Log.d("aaaaa", jsonObjectProduct.getString("title"));
                         cartFoodName.add(jsonObjectProduct.getString("title"));
                         int price = jsonObjectProduct.getInt("price");
+                        totalPrice += price;
                         cartItemPrice.add(String.valueOf(price));
                         cartImage.add(jsonObjectProduct.getString("photo"));
                     }
+                    binding.totalprice.setText(String.format("%.2f", totalPrice)+"Đ");
                     CartAdapter adapter = new CartAdapter(cartFoodName, cartItemPrice, cartImage);
                     binding.cartRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
                     binding.cartRecyclerView.setAdapter(adapter);

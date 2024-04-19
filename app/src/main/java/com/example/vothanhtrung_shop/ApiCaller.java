@@ -24,7 +24,7 @@ public class ApiCaller {
     private RequestQueue requestQueue;
     private static ApiCaller instance;
     private static Context ctx;
-    public static String url = "http://192.168.1.10:8080/api";
+    public static String url = "http://192.168.1.9:8080/api";
 
     private ApiCaller(Context context) {
         ctx = context.getApplicationContext();
